@@ -24,61 +24,71 @@ This project is a SQL and Power BI analysis of the Airbnb NYC 2019 dataset. I ch
 ## 🧠 SQL Operations Performed
 
 ```sql
--- Check if the table is working
-SELECT * FROM NY_HOUSES2 LIMIT 10;
 
--- Change column type of Last_review from VARCHAR to DATE
+-- 1. Check if the table is working
+SELECT * FROM NY_HOUSES2 LIMIT 10;
+-- Screenshot: ./images/check_if_the_table_works.png
+
+-- 2. Change column type of Last_review from VARCHAR to DATE
 ALTER TABLE NY_HOUSES2 MODIFY Last_review DATE;
 
--- Number of rows
+-- 3. Number of rows
 SELECT COUNT(*) FROM NY_HOUSES2;
+-- Screenshot: ./images/raw_count.png
 
--- Number of NULL values in Last_review column
+-- 4. Number of NULL values in Last_review column
 SELECT COUNT(*) FROM NY_HOUSES2 WHERE Last_review IS NULL;
 
--- Date of the most recent review
-SELECT * FROM NY_HOUSES2
+-- 5. Date of the most recent review
+SELECT Last_review AS 'The most recent review'
+FROM NY_HOUSES2
 ORDER BY Last_review DESC 
 LIMIT 1;
+-- Screenshot: ./images/The_most_recent_review.png
 
--- Most expensive listing
-SELECT * FROM NY_HOUSES2 
+-- 6. Most expensive listing
+SELECT Price AS 'The most expensive listing'
+FROM NY_HOUSES2 
 ORDER BY Price DESC
 LIMIT 1;
+-- Screenshot: ./images/The_most_expensive_listing.png
 
--- Cheapest listing
-SELECT * FROM NY_HOUSES2 
+-- 7. Cheapest listing (excluding free/invalid ones)
+SELECT Price AS 'The cheapest listing'
+FROM NY_HOUSES2 
 WHERE Price != 0
-ORDER BY Price ASC;
+ORDER BY Price ASC
+LIMIT 1;
+-- Screenshot: ./images/the_cheapest_lesting.png
 
--- Disable safe update mode (to allow updates)
+-- 8. Disable safe update mode (to allow updates)
 SHOW INDEX FROM NY_HOUSES2;
 SET SQL_SAFE_UPDATES = 0;
 
--- Change title from 'ENJOY Downtown NYC!' to 'Downtown NYC!'
+-- 9. Change listing title from 'ENJOY Downtown NYC!' to 'Downtown NYC!'
 UPDATE NY_HOUSES2
 SET TITLE = 'Downtown NYC!'
 WHERE ID = 12192;
 
--- Check if the change was successful
-SELECT * FROM NY_HOUSES2 
+-- 10. Confirm the change was successful
+SELECT Title FROM NY_HOUSES2 
 WHERE ID = 12192;
+-- Screenshot: ./images/Title_Downtown_NYC.png
 
--- Delete a row
+-- 11. Delete listing with ID = 2595
 DELETE FROM NY_HOUSES2
 WHERE ID = 2595;
 
--- Listings in Manhattan
+-- 12. Listings marked as 'Manhattan' or 'Other'
 SELECT TITLE,
     CASE
-        WHEN Neighbourhood_group = 'Manhattan'
-        THEN 'Manhattan'
-        WHEN Neighbourhood_group != 'Manhattan'
-        THEN 'Other'
+        WHEN Neighbourhood_group = 'Manhattan' THEN 'Manhattan'
+        ELSE 'Other'
     END AS Mark
 FROM NY_HOUSES2;
+-- Screenshot: ./images/Listings_in_Manhattan_or_other.png
 
--- Total number of listings + average price and average yearly availability grouped by neighborhood
+-- 13. Borough-level stats: total listings, average price, and availability
 SELECT 
     neighbourhood_group, 
     COUNT(id) AS total_listings, 
@@ -87,3 +97,5 @@ SELECT
 FROM NY_HOUSES2
 GROUP BY neighbourhood_group
 ORDER BY total_listings DESC;
+-- Screenshot: ./images/total_number_of_listings.png
+
