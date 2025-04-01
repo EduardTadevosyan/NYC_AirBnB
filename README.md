@@ -28,7 +28,7 @@ This project is a SQL and Power BI analysis of the Airbnb NYC 2019 dataset. I ch
 ```sql
 SELECT * FROM NY_HOUSES2 LIMIT 10;
 ```
-![Check if table works](images/check if the table works.png)
+![Check if table works](images/check_if_the_table_works.png)
 
 ---
 
