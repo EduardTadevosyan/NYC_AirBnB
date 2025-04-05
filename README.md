@@ -54,6 +54,7 @@ SELECT COUNT(*) FROM NY_HOUSES2;
 ```sql
 SELECT COUNT(*) FROM NY_HOUSES2 WHERE Last_review IS NULL;
 ```
+[null_count](https://github.com/EduardTadevosyan/NYC_AirBnB_SQL/blob/main/images/count_of_the_null_values.png)
 
 ---
 
